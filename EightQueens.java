@@ -7,15 +7,13 @@ import java.util.PriorityQueue;
 public class EightQueens 
 {	
 	private static final int SIZE = 8;
-	//private static ArrayList<Board> pqBoardState;
+	
 	public static void main(String[] args)
 	{
 		PriorityQueue<Board> neighborStates = null;
-		Board b;
+		Board b 			  = new Board();
 		boolean solutionFound = false;
 		int statesLower = 0,restartCount = 0,stateChanges = 0;
-		b = new Board();
-		//System.out.println(b);
 		
 		do
 		{
@@ -35,21 +33,15 @@ public class EightQueens
 			{
 		
 				neighborStates 	    = new PriorityQueue<Board>();
-				Board currentState  = new Board((Board)deepClone(b));
-				
-			
-				
+				Board currentState  = new Board((Board)copy(b));
+	
 				for(int i = 0; i < SIZE;i++)//each col
-				{
-				
+				{		
 					for(int j = 0; j < SIZE; j++)//each row
 					{				
 						currentState.moveQueen(i);
-						neighborStates.add((Board)deepClone(currentState));
-									
-					}
-					
-					
+						neighborStates.add((Board)copy(currentState));					
+					}	
 				}
 				
 				for(Board brd : neighborStates)
@@ -64,7 +56,7 @@ public class EightQueens
 					System.out.println("---------------------------------");
 					System.out.println(b);
 					System.out.println("Neighbors found with lower h: " + statesLower +"\n");
-					b = (Board)deepClone(neighborStates.peek());
+					b = (Board)copy(neighborStates.peek());
 					stateChanges++;
 				}
 				else if(b.compareTo(neighborStates.peek()) > 0)
@@ -73,7 +65,7 @@ public class EightQueens
 					System.out.println("---------------------------------");
 					System.out.println(b);
 					System.out.println("Neighbors found with lower h: " + statesLower +"\n");
-					b = (Board)deepClone(neighborStates.peek());
+					b = (Board)copy(neighborStates.peek());
 					stateChanges++;
 				}
 				else
@@ -86,33 +78,33 @@ public class EightQueens
 					b = new Board();
 					restartCount++;
 					
-				}
-			
-			}
-						
-		}while(!solutionFound);
-		
-			
+				}		
+			}					
+		}while(!solutionFound);		
 	}
 	
-	 public static Object deepClone(Object o) 
-	 {  
-		 try 
-		 {
-		     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		     ObjectOutputStream oos 	= new ObjectOutputStream(baos);
+	public static Board copy(Board o) 
+	{  
+		try 
+		{
+		    
+			ByteArrayOutputStream baos  = new ByteArrayOutputStream();
+		    ObjectOutputStream objOut 	= new ObjectOutputStream(baos);
 		     
-		     oos.writeObject(o);
+		    objOut.writeObject(o);
+		    objOut.flush();
+		    objOut.close();
 		     
-		     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-		     ObjectInputStream ois 	   = new ObjectInputStream(bais);
+		    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+		    ObjectInputStream objIn   = new ObjectInputStream(bais);
 		     
-		     return ois.readObject();
-		 }
-		 catch (Exception e) 
-		 {
-		     e.printStackTrace();
-		     return null;
-		 }
-	 }		
+		     
+		    return (Board) objIn.readObject();
+		}
+		catch (Exception e) 
+		{
+		    e.printStackTrace();
+		    return null;
+		}
+	}		
 }	
