@@ -1,8 +1,8 @@
-# EightQueens
+## EightQueens
 
-The Eight Queens Problem.
+#The Eight Queens Problem.
 
-Using a regular chess board, the challenge is to place eight queens on the board such that no queen is attacking any of the others.
+#Using a regular chess board, the challenge is to place eight queens on the board such that no queen is attacking any of the others.
 
 
-Uses rudimentary AI techniques to solve the Eight-Queens (N-Queens) problem.
+This algorithm Uses rudimentary AI techniques to solve the Eight-Queens (N-Queens) problem.
